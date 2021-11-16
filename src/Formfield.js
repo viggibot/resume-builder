@@ -11,8 +11,8 @@ const UserDetails = () => {
                 <Header/>
                 <WorkExperience/>
                 <Achivements/>
-                <Skills/>
             </form>
+            <Skills/>
         </div>
     );
 }
