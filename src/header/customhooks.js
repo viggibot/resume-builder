@@ -11,7 +11,7 @@ const useCustomHooks = (setArrayFormField,formField,formPos,setPos) => {
     const deleteForm = (e,id) => {
         e.preventDefault();
         setArrayFormField((prev) => {
-            return prev.filter(element => element.id != id);
+            return prev.filter(element => element.id !== id);
         })
     }
 
