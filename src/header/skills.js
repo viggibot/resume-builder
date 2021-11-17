@@ -2,19 +2,20 @@ import {useState} from "react";
 
 const Skills = () =>{
 
-    const [pos, setpos] = useState(0)
+    const [pos, setpos] = useState(null)
 
-    const [skilltag, setTag] = useState(null);
+    const [skilltag, setTag] = useState([]);
 
-    const [tagName, setName] = useState("Skills");
-
+    const [tagName, setName] = useState("");
+    
     const addTag = (e) => {
         e.preventDefault();
+        setpos(pos + 1);
+        setTag((prev) => {
+            return [...prev,{id:pos + 1,tag:e.target[0].value}]
+        })
+        setName("");
     }
-
-    console.log(skilltag);
-
-    
 
     return(
         <div className="WorkExperience common">
@@ -28,8 +29,8 @@ const Skills = () =>{
                     </div>
                 </div>
             <div className="SkillsContainer">
-                <ul>
-                    {skilltag ? skilltag.map(element => <li key={pos}>{element.tag}{element.id}</li>) : null}
+                <ul className="tag-container">
+                    {skilltag ? skilltag.map(element => <li key={element.id} className="tags">{element.tag}</li>) : null}
                 </ul>
             </div>
             </fieldset>
