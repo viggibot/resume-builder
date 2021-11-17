@@ -2,7 +2,7 @@ import React from "react";
 import img from "../photo.jpg";
 import "../index.css";
 
-const Header = () => {
+const HeaderDesign = () => {
     return(
     <React.Fragment>    
         <div className="header">
@@ -35,4 +35,4 @@ const Header = () => {
     )
 }
 
-export default Header;
+export default HeaderDesign;
