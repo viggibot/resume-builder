@@ -1,37 +1,61 @@
-import {useState } from "react";
-import useCustomHooks from "./customhooks";
+import { useState } from "react";
 
-const WorkExperience = () =>{
+const WorkExperience = ({workExperienceList,setWorkExperience}) =>{
 
-    const [formPos, setPos] = useState(1);
+    const [idValue,setIdValue] = useState(1);
 
-    let formField = 
-        <div className="common-container">
-        <input type="text" placeholder="Title" required />
-        <input type="text" placeholder="Company Name" required />
-        <input type="text" placeholder="Phone Number"/>
-        <input type="text" placeholder="City, Country"/>
-        <div>
-            <input type="month"required/> <input type="year"required/>
-        </div>
-        <div className="textEditor">
-            <textarea></textarea>
-        </div>
-        </div>;
+    const handelChange = (e,index) => {
+        const {name, value} = e.target;
+        const list = [...workExperienceList];
+        list[index][name] = value;
+        setWorkExperience(list);
+    }
 
-    let objectformField = [{id:1,form:formField}]
-    const [arrayFormField, setArrayFormField] = useState(objectformField);
+    const appendForm = (e) => {
+        setIdValue(idValue + 1);
+        setWorkExperience((prev)=>{ return [...prev,{
+            id: idValue + 1,
+            role:"",
+            companyName:"",
+            cityWork:"",
+            startDate:"",
+            endDate:"",
+            moreDetails:""
+        }]}); 
+    }
 
-    const {appendForm,deleteForm} = useCustomHooks(setArrayFormField,formField,formPos,setPos);
+    const deleteForm = (e,id) => {
+        e.preventDefault();
+        setWorkExperience((prev) => {
+            return prev.filter(element => element.id !== id);
+        })   
+    }
 
     return(
         <div className="WorkExperience common">
             <fieldset><legend><h2>WORK EXPERIENCES</h2></legend>
             <div className="appendChild">
-            {arrayFormField.map(element => { return <div key={element.id}>
-            <p>form field{element.id}</p>
-            {element.id <= 1 ? null : <button className="deletebtn" onClick={e => deleteForm(e,element.id)}>delete</button> }   
-            {element.form}</div> })}
+                {workExperienceList.map((element,index) => { return <div key={element.id}>
+                <p>form field{}</p>
+                {element.id <= 1 ? null : <button className="deletebtn" onClick={e => deleteForm(e,index)}>delete</button> }   
+                <div className="common-container">
+                    <input type="text" placeholder="Role" name="role" onChange={(e) => handelChange(e,index)} />
+                    <input type="text" placeholder="Company Name" name="companyName" onChange={(e) => handelChange(e,index)}/>
+                    <input type="text" placeholder="City, Country" name="cityWork" onChange={(e) => handelChange(e,index)}/>
+                    <div>
+                        <div>
+                            <input type="month" name="startDate" onChange={(e) => handelChange(e,index)}/>
+                        </div>
+                        <div>
+                            <input type="month" name="endDate" onChange={(e) => handelChange(e,index)}/>
+                        </div>
+                    </div>
+                    <div className="textEditor">
+                        <textarea placeholder="Type something here..." name="moreDetails" onChange={(e) => handelChange(e,index)}/>
+                    </div>
+                </div>
+                
+                </div>})}
             </div>
             <button className="btn" onClick={e => appendForm(e)}>Add More Fields +</button>
             </fieldset>

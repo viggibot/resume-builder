@@ -1,37 +1,61 @@
 import {useState } from "react";
-import useCustomHooks from "./customhooks";
 
-const Achivements = () =>{
-   
-   const [formPos, setPos] = useState(1);
-    
-    let formField = 
-        <div className="common-container">
-        <input type="text" placeholder="Title"/>
-        <input type="text" placeholder="Company Name"/>
-        <input type="text" placeholder="Phone Number"/>
-        <input type="text" placeholder="City, Country"/>
-        <div>
-            <input type="month"/> <input type="year"/>
-        </div>
-        <div className="textEditor">
-            <textarea></textarea>
-        </div>
-        </div>;
+const Achivements = ({education,setEducation}) =>{
 
-    let objectformField = [{id:1,form:formField}]
-    const [arrayFormField, setArrayFormField] = useState(objectformField);
+    const [idValue,setIdValue] = useState(1);
 
-    const {appendForm,deleteForm} = useCustomHooks(setArrayFormField,formField,formPos,setPos);
+    const handelChange = (e,index) => {
+        const {name, value} = e.target;
+        const list = [...education];
+        list[index][name] = value;
+        setEducation(list);
+    }
+
+    const appendForm = (e) => {
+        setIdValue(idValue + 1);
+        setEducation((prev)=>{ return [...prev,{
+            id: idValue + 1,
+            Title:"",
+            companyName:"",
+            cityWork:"",
+            startDate:"",
+            endDate:"",
+            moreDetails:""
+        }]}); 
+    }
+
+    const deleteForm = (e,id) => {
+        e.preventDefault();
+        setEducation((prev) => {
+            return prev.filter(element => element.id !== id);
+        })   
+    }
+
 
     return(
         <div className="WorkExperience common">
             <fieldset><legend><h2>EDUCATION DETAILS</h2></legend>
             <div className="appendChild">
-            {arrayFormField.map(element => { return <div key={element.id}>
+            {education.map((element,index) => { return <div key={element.id}>
             <p>form field{element.id}</p>
             {element.id <= 1 ? null : <button className="deletebtn" onClick={e => deleteForm(e,element.id)}>delete</button> }   
-            {element.form}</div> })}
+            <div className="common-container">
+                <input type="text" placeholder="Title" name="Title" onChange={(e) => handelChange(e,index)}/>
+                <input type="text" placeholder="Company Name" name="companyName" onChange={(e) => handelChange(e,index)}/>
+                <input type="text" placeholder="City, Country" name="citywork" onChange={(e) => handelChange(e,index)}/>
+                <div>
+                    <div>
+                        <input type="month" name="startDate" onChange={(e) => handelChange(e,index)}/>
+                    </div>
+                    <div>
+                        <input type="month" name="endDate" onChange={(e) => handelChange(e,index)}/>
+                    </div>
+                    </div>
+                <div className="textEditor">
+                    <textarea placeholder="Type something here.." name="moreDetails" onChange={(e) => handelChange(e,index)}></textarea>
+                </div>
+            </div>
+            </div>})}
             </div>
             <button className="btn" onClick={e => appendForm(e)}>Add More Fields +</button>
             </fieldset>

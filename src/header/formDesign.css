@@ -37,8 +37,11 @@ fieldset{
 }
 
 .inner-skill-container{
-    display: flex;
     border: 2px solid #333;
+}
+
+.inner-skill-container form{
+    display: flex;
 }
 
 .skill-tag input{
@@ -65,4 +68,18 @@ fieldset{
 
 .deletebtn{
     background-color:#FF5A36;
+}
+
+.tag-container{
+    list-style-type:none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags{
+    margin:10px 10px;
+    background-color: #FF5A36;
+    padding:8px;
+    border-radius:6px;
+    color:#f1f1f1;
 }
